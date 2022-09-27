@@ -1,6 +1,7 @@
 package com.courses.resources;
 
 import java.net.URI;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.courses.domain.Post;
 import com.courses.domain.User;
 import com.courses.dto.UserDTO;
 import com.courses.service.UserService;
@@ -63,6 +65,13 @@ public class UserResource {
 		obj = service.update(obj);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}/posts", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+		User obj = service.findById(id);
+		
+		return ResponseEntity.ok().body(obj.getPosts());
 	}
 	
 }
