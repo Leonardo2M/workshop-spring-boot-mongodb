@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.courses.domain.User;
+import com.courses.dto.UserDTO;
 import com.courses.service.UserService;
 
 @RestController
@@ -19,11 +20,11 @@ public class UserResource {
 	private UserService service;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<User>> findAll(){
+	public ResponseEntity<List<UserDTO>> findAll(){
 	
 		List<User> list = service.findAll();
-		
-		return ResponseEntity.ok().body(list);
+		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).toList();
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 }
